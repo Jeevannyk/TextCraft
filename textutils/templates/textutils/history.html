@@ -1,0 +1,80 @@
+<!-- prettier-ignore -->
+{% extends "textutils/base.html" %}
+<!-- prettier-ignore -->
+{% block title %}History — Text-Utilities{% endblock title %}
+<!-- prettier-ignore -->
+{% block content %}
+
+<div class="fade-in">
+  <h3 class="fw-bold mb-4">
+    <i class="bi bi-clock-history me-2"></i>Processing History
+  </h3>
+
+  {% if history %}
+  <div class="card p-0 overflow-hidden">
+    <div class="table-responsive">
+      <table class="table table-hover mb-0 align-middle">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Original Text</th>
+            <th>Processed Text</th>
+            <th>Operations</th>
+            <th>Date &amp; Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in history %}
+          <tr
+            class="history-row"
+            style="animation-delay: {{ forloop.counter0 }}00ms;"
+          >
+            <td>{{ forloop.counter }}</td>
+            <td
+              style="
+                max-width: 220px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+              "
+              title="{{ item.original_text }}"
+            >
+              {{ item.original_text|truncatechars:50 }}
+            </td>
+            <td
+              style="
+                max-width: 220px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+              "
+              title="{{ item.processed_text }}"
+            >
+              {{ item.processed_text|truncatechars:50 }}
+            </td>
+            <td>
+              {% for op in item.selected_options.split:", " %}
+              <span class="badge bg-primary me-1">{{ op }}</span>
+              {% endfor %}
+            </td>
+            <td class="text-muted" style="white-space: nowrap">
+              {{ item.created_at|date:"M d, Y H:i" }}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% else %}
+  <div class="card p-5 text-center text-muted">
+    <i class="bi bi-inbox" style="font-size: 3rem"></i>
+    <p class="mt-3 mb-0">No history yet. Go analyze some text!</p>
+    <a href="{% url 'textutils:index' %}" class="btn btn-primary mt-3">
+      <i class="bi bi-arrow-left me-1"></i>Home
+    </a>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}

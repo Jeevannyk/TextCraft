@@ -1,0 +1,121 @@
+<!-- prettier-ignore -->
+{% extends "textutils/base.html" %}
+<!-- prettier-ignore -->
+{% block title %}Home — Text-Utilities{% endblock title %}
+<!-- prettier-ignore -->
+{% block content %}
+
+<!-- Hero -->
+<div class="hero-banner">
+  <i class="bi bi-lightning-charge me-1"></i>
+  Enter your text below and choose the operations you want to apply.
+</div>
+
+<div class="row g-4">
+  <!-- ===== Left column — Form ===== -->
+  <div class="col-lg-7 fade-in">
+    <div class="card p-4">
+      <form
+        method="post"
+        action="{% url 'textutils:analyze' %}"
+        id="analyzeForm"
+      >
+        {% csrf_token %}
+
+        <!-- Textarea -->
+        <div class="mb-3">
+          <label for="inputText" class="form-label fw-semibold">
+            <i class="bi bi-pencil-square me-1"></i>Your Text
+          </label>
+          <textarea
+            class="form-control"
+            id="inputText"
+            name="text"
+            rows="7"
+            placeholder="Paste or type something…"
+          ></textarea>
+        </div>
+
+        <!-- Live counters -->
+        <div class="d-flex gap-3 mb-3">
+          <span class="counter-badge">
+            <i class="bi bi-fonts"></i>
+            Characters: <strong id="charCount">0</strong>
+          </span>
+          <span class="counter-badge">
+            <i class="bi bi-card-text"></i>
+            Words: <strong id="wordCount">0</strong>
+          </span>
+        </div>
+
+        <!-- Toggle switches -->
+        <div class="mb-3">
+          <p class="fw-semibold mb-2">
+            <i class="bi bi-toggles me-1"></i>Operations
+          </p>
+
+          <div class="form-check form-switch operation-toggle">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              name="removepunctuations"
+              id="switchPunctuations"
+            />
+            <label class="form-check-label" for="switchPunctuations">
+              Remove Punctuations
+            </label>
+          </div>
+
+          <div class="form-check form-switch operation-toggle">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              name="capitalize"
+              id="switchCapitalize"
+            />
+            <label class="form-check-label" for="switchCapitalize">
+              Capitalize
+            </label>
+          </div>
+
+          <div class="form-check form-switch operation-toggle">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              name="spaceremover"
+              id="switchSpaces"
+            />
+            <label class="form-check-label" for="switchSpaces">
+              Remove Extra Spaces
+            </label>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          id="submitBtn"
+          class="btn btn-primary w-100"
+          disabled
+        >
+          <i class="bi bi-gear me-1"></i>Analyze Text
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== Right column — Live Preview ===== -->
+  <div class="col-lg-5 fade-in delay-1">
+    <div class="card p-4 h-100">
+      <h6 class="fw-semibold mb-3">
+        <i class="bi bi-eye me-1"></i>Live Preview
+      </h6>
+      <div id="livePreview">Start typing to see a live preview…</div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

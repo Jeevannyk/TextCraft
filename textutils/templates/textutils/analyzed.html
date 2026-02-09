@@ -1,0 +1,56 @@
+<!-- prettier-ignore -->
+{% extends "textutils/base.html" %}
+<!-- prettier-ignore -->
+{% block title %}Result — Text-Utilities{% endblock title %}
+<!-- prettier-ignore -->
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <!-- Result card -->
+    <div class="card result-card p-4 mb-4">
+      <h4 class="fw-bold mb-3">
+        <i class="bi bi-check-circle text-success me-2"></i>Analysis Complete
+      </h4>
+
+      <!-- Operations applied -->
+      <p class="mb-2">
+        <span class="badge bg-primary">{{ task }}</span>
+      </p>
+
+      <!-- Original text -->
+      <div class="mb-3">
+        <label class="form-label fw-semibold text-muted">Original Text</label>
+        <div
+          class="p-3 rounded"
+          style="background: var(--bg); border: 1px solid var(--border)"
+        >
+          {{ original_text }}
+        </div>
+      </div>
+
+      <!-- Processed text -->
+      <div class="mb-3">
+        <label class="form-label fw-semibold text-muted">Processed Text</label>
+        <div
+          class="p-3 rounded"
+          style="background: var(--bg); border: 1px solid var(--border)"
+        >
+          <pre
+            class="mb-0"
+            style="white-space: pre-wrap; word-break: break-word"
+          >
+{{ analyzed_text }}</pre
+          >
+        </div>
+      </div>
+
+      <!-- Back button -->
+      <a href="{% url 'textutils:index' %}" class="btn btn-primary mt-2">
+        <i class="bi bi-arrow-left me-1"></i>Analyze More
+      </a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

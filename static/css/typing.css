@@ -1,0 +1,313 @@
+/* ============================================================
+   Typing Speed Test — Custom Stylesheet
+   ============================================================ */
+
+:root {
+    --typing-primary: #6c5ce7;
+    --typing-primary-dark: #4834d4;
+    --typing-success: #00b894;
+    --typing-danger: #e17055;
+    --typing-warning: #fdcb6e;
+    --typing-bg: #f8f9fc;
+    --typing-card: #ffffff;
+    --typing-text: #2d3436;
+    --typing-muted: #636e72;
+    --typing-border: #dfe6e9;
+    --typing-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    --typing-radius: 14px;
+}
+
+/* ---------- Page layout ------------------------------------ */
+body {
+    background: var(--typing-bg);
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    color: var(--typing-text);
+    min-height: 100vh;
+}
+
+/* ---------- Navbar ----------------------------------------- */
+.typing-navbar {
+    background: linear-gradient(135deg, var(--typing-primary), var(--typing-primary-dark)) !important;
+    box-shadow: 0 4px 20px rgba(108, 92, 231, 0.35);
+}
+.typing-navbar .navbar-brand {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* ---------- Cards ------------------------------------------ */
+.typing-card {
+    background: var(--typing-card);
+    border: 1px solid var(--typing-border);
+    border-radius: var(--typing-radius);
+    box-shadow: var(--typing-shadow);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.typing-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* ---------- Difficulty selector ---------------------------- */
+.difficulty-btn {
+    border-radius: 10px;
+    padding: 0.6rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+.difficulty-btn.active {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+}
+.difficulty-btn:hover:not(.active) {
+    transform: scale(1.02);
+}
+.diff-easy { background: #00b89433; color: #00b894; border-color: #00b894; }
+.diff-easy.active { background: #00b894; color: #fff; }
+.diff-medium { background: #fdcb6e33; color: #e17055; border-color: #fdcb6e; }
+.diff-medium.active { background: #fdcb6e; color: #2d3436; }
+.diff-hard { background: #e1705533; color: #d63031; border-color: #e17055; }
+.diff-hard.active { background: #e17055; color: #fff; }
+
+/* ---------- Duration selector ------------------------------ */
+.duration-btn {
+    border-radius: 8px;
+    padding: 0.45rem 1.2rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+.duration-btn.active {
+    background: var(--typing-primary) !important;
+    color: #fff !important;
+    border-color: var(--typing-primary) !important;
+}
+
+/* ---------- Paragraph display ------------------------------ */
+#paragraphDisplay {
+    font-family: 'Fira Code', 'Consolas', 'Courier New', monospace;
+    font-size: 1.15rem;
+    line-height: 1.9;
+    padding: 1.5rem;
+    border-radius: 12px;
+    background: #f1f2f6;
+    border: 2px solid var(--typing-border);
+    min-height: 120px;
+    user-select: none;
+    position: relative;
+    letter-spacing: 0.3px;
+}
+
+/* Character highlighting */
+.char {
+    position: relative;
+    transition: color 0.1s;
+}
+.char.correct {
+    color: var(--typing-success);
+}
+.char.incorrect {
+    color: var(--typing-danger);
+    text-decoration: underline;
+    text-decoration-color: var(--typing-danger);
+    background: rgba(225, 112, 85, 0.1);
+    border-radius: 2px;
+}
+.char.current {
+    border-left: 2px solid var(--typing-primary);
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    50% { border-color: transparent; }
+}
+
+/* ---------- Typing input ----------------------------------- */
+#typingInput {
+    font-family: 'Fira Code', 'Consolas', 'Courier New', monospace;
+    font-size: 1.1rem;
+    border-radius: 12px;
+    border: 2px solid var(--typing-border);
+    padding: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    resize: none;
+}
+#typingInput:focus {
+    border-color: var(--typing-primary);
+    box-shadow: 0 0 0 0.2rem rgba(108, 92, 231, 0.25);
+    outline: none;
+}
+#typingInput:disabled {
+    background: #f1f2f6;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* ---------- Timer bar -------------------------------------- */
+.timer-bar-container {
+    height: 8px;
+    border-radius: 4px;
+    background: #dfe6e9;
+    overflow: hidden;
+}
+.timer-bar {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--typing-success), var(--typing-primary));
+    transition: width 0.3s linear;
+}
+.timer-bar.warning {
+    background: linear-gradient(90deg, var(--typing-warning), var(--typing-danger));
+}
+
+/* ---------- Stats panel ------------------------------------ */
+.stat-box {
+    text-align: center;
+    padding: 0.75rem 0.5rem;
+    border-radius: 10px;
+    background: var(--typing-bg);
+    border: 1px solid var(--typing-border);
+    transition: transform 0.2s;
+}
+.stat-box:hover {
+    transform: translateY(-2px);
+}
+.stat-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--typing-primary);
+    line-height: 1.2;
+}
+.stat-label {
+    font-size: 0.75rem;
+    color: var(--typing-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 0.2rem;
+}
+
+/* ---------- Result card ------------------------------------ */
+.result-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1050;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+.result-overlay.show {
+    display: flex;
+}
+.result-card-popup {
+    background: #fff;
+    border-radius: 20px;
+    padding: 2.5rem;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+    animation: scaleIn 0.4s ease both;
+    text-align: center;
+}
+.result-wpm {
+    font-size: 4rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--typing-primary), var(--typing-success));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.result-grade {
+    display: inline-block;
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+.grade-excellent { background: #00b89422; color: #00b894; }
+.grade-good { background: #6c5ce722; color: #6c5ce7; }
+.grade-average { background: #fdcb6e44; color: #e17055; }
+.grade-practice { background: #e1705522; color: #d63031; }
+
+/* ---------- History badges --------------------------------- */
+.diff-badge-easy { background: #00b894; }
+.diff-badge-medium { background: #fdcb6e; color: #2d3436 !important; }
+.diff-badge-hard { background: #e17055; }
+
+/* ---------- Animations ------------------------------------- */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.85); }
+    to   { opacity: 1; transform: scale(1); }
+}
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.fade-in  { animation: fadeIn  0.5s ease both; }
+.fade-up  { animation: fadeUp  0.5s ease both; }
+.delay-1  { animation-delay: 0.1s; }
+.delay-2  { animation-delay: 0.2s; }
+.delay-3  { animation-delay: 0.3s; }
+
+/* ---------- History table ---------------------------------- */
+.typing-table th {
+    background: var(--typing-primary);
+    color: #fff;
+    font-weight: 600;
+}
+.typing-table td {
+    vertical-align: middle;
+}
+.history-row {
+    animation: fadeUp 0.35s ease both;
+}
+
+/* ---------- Start overlay ---------------------------------- */
+.start-hint {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 12px;
+    font-size: 1.1rem;
+    color: var(--typing-muted);
+    font-weight: 600;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    z-index: 5;
+}
+.start-hint.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ---------- Footer ----------------------------------------- */
+.typing-footer {
+    color: var(--typing-muted);
+    font-size: 0.85rem;
+}
+.typing-footer a { color: var(--typing-primary); text-decoration: none; }
+.typing-footer a:hover { text-decoration: underline; }
+
+/* ---------- Buttons ---------------------------------------- */
+.btn-typing-primary {
+    background: linear-gradient(135deg, var(--typing-primary), var(--typing-primary-dark));
+    border: none;
+    color: #fff;
+    border-radius: 10px;
+    padding: 0.6rem 2rem;
+    font-weight: 600;
+    transition: transform 0.15s ease, box-shadow 0.2s;
+}
+.btn-typing-primary:hover {
+    transform: scale(1.04);
+    box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
+    color: #fff;
+}

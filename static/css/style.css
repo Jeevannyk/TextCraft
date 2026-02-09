@@ -1,0 +1,190 @@
+/* ============================================================
+   Text-Utilities — Custom Stylesheet
+   ============================================================ */
+
+/* ---------- CSS variables (easy theming) -------------------- */
+:root {
+    --primary : #6c5ce7;
+    --primary-dark : #4834d4;
+    --accent  : #00cec9;
+    --bg      : #f8f9fc;
+    --card-bg : #ffffff;
+    --text    : #2d3436;
+    --muted   : #636e72;
+    --border  : #dfe6e9;
+    --shadow  : 0 8px 30px rgba(0,0,0,.08);
+    --radius  : 14px;
+}
+
+/* ---------- Base -------------------------------------------- */
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    min-height: 100vh;
+}
+
+/* ---------- Navbar ------------------------------------------ */
+.navbar {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
+    box-shadow: 0 4px 20px rgba(108,92,231,.35);
+}
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: .5px;
+}
+
+/* ---------- Hero alert banner ------------------------------- */
+.hero-banner {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: #fff;
+    border: none;
+    border-radius: 0 0 var(--radius) var(--radius);
+    text-align: center;
+    font-size: 1.05rem;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    animation: fadeDown .6s ease;
+}
+
+/* ---------- Card -------------------------------------------- */
+.card, .glass-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+.card:hover, .glass-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,0,0,.12);
+}
+
+/* ---------- Textarea --------------------------------------- */
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 .2rem rgba(108,92,231,.25);
+}
+textarea.form-control {
+    border-radius: 10px;
+    resize: vertical;
+    transition: border-color .2s;
+}
+
+/* ---------- Toggle switches -------------------------------- */
+.form-check-input:checked {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+.operation-toggle {
+    padding: .65rem 1rem;
+    border-radius: 10px;
+    transition: background .2s;
+}
+.operation-toggle:hover {
+    background: rgba(108,92,231,.06);
+}
+
+/* ---------- Buttons ---------------------------------------- */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border: none;
+    border-radius: 10px;
+    padding: .6rem 2rem;
+    font-weight: 600;
+    letter-spacing: .3px;
+    transition: transform .15s ease, box-shadow .2s;
+}
+.btn-primary:hover:not(:disabled) {
+    transform: scale(1.04);
+    box-shadow: 0 6px 20px rgba(108,92,231,.4);
+}
+.btn-primary:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+}
+.btn-outline-light:hover {
+    background: rgba(255,255,255,.15);
+}
+
+/* ---------- Live counters ---------------------------------- */
+.counter-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: .3rem .75rem;
+    font-size: .85rem;
+    color: var(--muted);
+}
+.counter-badge strong {
+    color: var(--primary);
+}
+
+/* ---------- Result card ------------------------------------ */
+.result-card {
+    animation: fadeUp .5s ease both;
+}
+.result-card .badge {
+    font-size: .8rem;
+}
+
+/* ---------- History table ---------------------------------- */
+.table th {
+    background: var(--primary);
+    color: #fff;
+    font-weight: 600;
+}
+.table td {
+    vertical-align: middle;
+}
+.history-row {
+    animation: fadeUp .35s ease both;
+}
+.history-row:nth-child(odd) td {
+    background: rgba(108,92,231,.03);
+}
+
+/* ---------- Live preview ----------------------------------- */
+#livePreview {
+    background: var(--bg);
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+    padding: 1rem;
+    min-height: 60px;
+    transition: opacity .3s;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: var(--muted);
+    font-size: .95rem;
+}
+
+/* ---------- Animations ------------------------------------- */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* ---------- Footer ----------------------------------------- */
+footer {
+    color: var(--muted);
+    font-size: .85rem;
+}
+footer a { color: var(--primary); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* ---------- Utility ---------------------------------------- */
+.fade-in  { animation: fadeIn .5s ease both; }
+.delay-1  { animation-delay: .1s; }
+.delay-2  { animation-delay: .2s; }
+.delay-3  { animation-delay: .3s; }

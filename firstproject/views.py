@@ -21,45 +21,51 @@ def index(request):
 #      )
 
 def removepunctuations(request):
-    inputtext = request.POST.get('text', 'default')
-    removepunctuations = request.POST.get('removepunctuations', 'off')
-    capitalize = request.POST.get('capitalize', 'off')
-    spaceremover = request.POST.get('spaceremover', 'off')
+    inputtext = request.POST.get('text', '')
+    removepunctuations_option = request.POST.get('removepunctuations', 'off')
+    capitalize_option = request.POST.get('capitalize', 'off')
+    spaceremover_option = request.POST.get('spaceremover', 'off')
 
-    if removepunctuations == 'on':
-        punctuations = '''!@$%^&*()_+-=[];:><'",.?/#'''
-        analyzed = ""
-        for char in inputtext:
-            if char not in punctuations:
-                analyzed = analyzed + char
-
-        user_text = {'Task': 'Removed Punctuations', 'analyzed_text': analyzed}
-        inputtext = analyzed
-    
-    if capitalize == 'on':
-        analyzed = ""
-        for char in inputtext:
-            analyzed = analyzed + char.upper()
-
-        user_text = {'Task': 'Capitalized ', 'analyzed_text': analyzed}
-        inputtext = analyzed
-    
-    if spaceremover == 'on':
-        analyzed=""
-        for index, char in enumerate(inputtext):
-            if not (inputtext[index]== " " and inputtext[index+1]== " "):               
-                analyzed = analyzed + char
-
-        user_text = {'Task': 'sorted ', 'analyzed_text': analyzed}
-        
-    if(removepunctuations != "on" and capitalize != "on" and spaceremover != "on"):
+    # If no operation is selected, show a simple message
+    if (
+        removepunctuations_option != "on"
+        and capitalize_option != "on"
+        and spaceremover_option != "on"
+    ):
         return HttpResponse("You have not selected any operations !!")
-        
-        return render(request, 'analyzed.html', user_text)
-    
 
-    else:
-        return HttpResponse("ERROR - Your text has not been analyzed.")
+    analyzed = inputtext
+    tasks = []
+
+    if removepunctuations_option == 'on':
+        punctuations = '''!@$%^&*()_+-=[];:><"',.?/#'''
+        temp = ""
+        for char in analyzed:
+            if char not in punctuations:
+                temp += char
+        analyzed = temp
+        tasks.append('Removed Punctuations')
+
+    if capitalize_option == 'on':
+        analyzed = analyzed.upper()
+        tasks.append('Capitalized')
+
+    if spaceremover_option == 'on':
+        temp = ""
+        for index, char in enumerate(analyzed):
+            # Skip if this and the next character are both spaces
+            if char == " " and index + 1 < len(analyzed) and analyzed[index + 1] == " ":
+                continue
+            temp += char
+        analyzed = temp
+        tasks.append('Removed Extra Spaces')
+
+    user_text = {
+        'Task': ", ".join(tasks),
+        'analyzed_text': analyzed,
+    }
+
+    return render(request, 'analyzed.html', user_text)
 
 def spaceremover(request):
     return HttpResponse("spaceremover")

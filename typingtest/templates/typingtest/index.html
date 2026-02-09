@@ -1,0 +1,199 @@
+<!-- prettier-ignore -->
+{% extends "typingtest/base.html" %}
+<!-- prettier-ignore -->
+{% load static %}
+<!-- prettier-ignore -->
+{% block title %}Typing Speed Test{% endblock title %}
+<!-- prettier-ignore -->
+{% block content %}
+
+<!-- Difficulty & Duration Selectors -->
+<div class="typing-card p-4 mb-4 fade-up">
+  <div class="row align-items-center">
+    <!-- Difficulty -->
+    <div class="col-md-6 mb-3 mb-md-0">
+      <h6 class="fw-bold mb-2">
+        <i class="bi bi-speedometer me-1"></i>Difficulty
+      </h6>
+      <div class="d-flex gap-2 flex-wrap">
+        <button
+          class="btn difficulty-btn diff-easy active"
+          data-difficulty="easy"
+        >
+          <i class="bi bi-emoji-smile me-1"></i>Easy
+        </button>
+        <button class="btn difficulty-btn diff-medium" data-difficulty="medium">
+          <i class="bi bi-emoji-neutral me-1"></i>Medium
+        </button>
+        <button class="btn difficulty-btn diff-hard" data-difficulty="hard">
+          <i class="bi bi-emoji-dizzy me-1"></i>Hard
+        </button>
+      </div>
+    </div>
+
+    <!-- Duration -->
+    <div class="col-md-4">
+      <h6 class="fw-bold mb-2"><i class="bi bi-clock me-1"></i>Duration</h6>
+      <div class="d-flex gap-2">
+        <button
+          class="btn btn-outline-secondary duration-btn"
+          data-duration="30"
+        >
+          30s
+        </button>
+        <button
+          class="btn btn-outline-secondary duration-btn active"
+          data-duration="60"
+        >
+          60s
+        </button>
+        <button
+          class="btn btn-outline-secondary duration-btn"
+          data-duration="120"
+        >
+          120s
+        </button>
+      </div>
+    </div>
+
+    <!-- New Test button -->
+    <div class="col-md-2 text-end mt-3 mt-md-0">
+      <button class="btn btn-typing-primary" id="newTestBtn">
+        <i class="bi bi-arrow-clockwise me-1"></i>New
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Timer Bar -->
+<div class="typing-card p-3 mb-4 fade-up delay-1">
+  <div class="d-flex align-items-center gap-3">
+    <div class="d-flex align-items-center gap-2">
+      <i
+        class="bi bi-stopwatch"
+        style="font-size: 1.3rem; color: var(--typing-primary)"
+      ></i>
+      <span class="fw-bold" style="font-size: 1.3rem" id="timerDisplay"
+        >60</span
+      >
+      <span class="text-muted" style="font-size: 0.85rem">sec</span>
+    </div>
+    <div class="timer-bar-container flex-grow-1">
+      <div class="timer-bar" id="timerBar" style="width: 100%"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Live Stats Panel -->
+<div class="row g-3 mb-4 fade-up delay-2">
+  <div class="col-3">
+    <div class="stat-box">
+      <div class="stat-value" id="wpmStat">0</div>
+      <div class="stat-label">WPM</div>
+    </div>
+  </div>
+  <div class="col-3">
+    <div class="stat-box">
+      <div class="stat-value" id="accuracyStat">100</div>
+      <div class="stat-label">Accuracy %</div>
+    </div>
+  </div>
+  <div class="col-3">
+    <div class="stat-box">
+      <div class="stat-value" id="errorStat">0</div>
+      <div class="stat-label">Errors</div>
+    </div>
+  </div>
+  <div class="col-3">
+    <div class="stat-box">
+      <div class="stat-value" id="charsStat">0</div>
+      <div class="stat-label">Chars</div>
+    </div>
+  </div>
+</div>
+
+<!-- Paragraph Display -->
+<div class="typing-card p-0 mb-4 fade-up delay-3">
+  <div id="paragraphDisplay" class="position-relative">
+    <div class="start-hint" id="startHint">
+      <span
+        ><i class="bi bi-cursor-text me-2"></i>Click the box below and start
+        typing…</span
+      >
+    </div>
+    Loading paragraph…
+  </div>
+</div>
+
+<!-- Typing Input -->
+<div class="mb-4 fade-up delay-3">
+  <textarea
+    class="form-control"
+    id="typingInput"
+    rows="4"
+    placeholder="Start typing here…"
+    autocomplete="off"
+    autocorrect="off"
+    autocapitalize="off"
+    spellcheck="false"
+  ></textarea>
+</div>
+
+<!-- Result Overlay (popup after test) -->
+<div class="result-overlay" id="resultOverlay">
+  <div class="result-card-popup">
+    <h5 class="text-muted mb-1">Your Result</h5>
+    <div class="result-wpm" id="resultWpm">0</div>
+    <div class="text-muted mb-3">Words Per Minute</div>
+    <div id="resultGrade" class="result-grade grade-average mb-3">Average</div>
+
+    <div class="row g-3 mt-2 mb-4">
+      <div class="col-4">
+        <div class="stat-box">
+          <div class="stat-value" style="font-size: 1.2rem" id="resultAccuracy">
+            0%
+          </div>
+          <div class="stat-label">Accuracy</div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="stat-box">
+          <div class="stat-value" style="font-size: 1.2rem" id="resultChars">
+            0
+          </div>
+          <div class="stat-label">Characters</div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="stat-box">
+          <div class="stat-value" style="font-size: 1.2rem" id="resultErrors">
+            0
+          </div>
+          <div class="stat-label">Errors</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex gap-2 justify-content-center">
+      <button class="btn btn-typing-primary" id="resultCloseBtn">
+        <i class="bi bi-arrow-clockwise me-1"></i>Try Again
+      </button>
+      <a
+        href="{% url 'typingtest:history' %}"
+        class="btn btn-outline-secondary"
+        style="border-radius: 10px"
+      >
+        <i class="bi bi-clock-history me-1"></i>History
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- prettier-ignore -->
+{% endblock content %}
+
+<!-- prettier-ignore -->
+{% block scripts %}
+<script src="{% static 'js/typing.js' %}"></script>
+<!-- prettier-ignore -->
+{% endblock scripts %}
