@@ -13,7 +13,8 @@
     --typing-text: #2d3436;
     --typing-muted: #636e72;
     --typing-border: #dfe6e9;
-    --typing-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    --typing-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+    --typing-shadow-hover: 0 10px 36px rgba(0, 0, 0, 0.10);
     --typing-radius: 14px;
 }
 
@@ -29,10 +30,24 @@ body {
 .typing-navbar {
     background: linear-gradient(135deg, var(--typing-primary), var(--typing-primary-dark)) !important;
     box-shadow: 0 4px 20px rgba(108, 92, 231, 0.35);
+    padding-top: 0.85rem;
+    padding-bottom: 0.85rem;
+}
+.typing-navbar > .container {
+    max-width: 1200px;
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
 .typing-navbar .navbar-brand {
     font-weight: 700;
     letter-spacing: 0.5px;
+}
+.typing-navbar .navbar-nav {
+    padding-right: 0.75rem;
+}
+.typing-navbar .nav-link {
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 /* ---------- Cards ------------------------------------------ */
@@ -42,10 +57,35 @@ body {
     border-radius: var(--typing-radius);
     box-shadow: var(--typing-shadow);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
+    padding: 1.5rem;
+}
+.typing-card.p-4 {
+    padding: 1.75rem;
 }
 .typing-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--typing-shadow-hover);
+}
+
+/* ---------- Main container spacing ------------------------- */
+.typing-navbar ~ .container,
+.typing-navbar ~ main.container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2.5rem 1.5rem;
+}
+@media (min-width: 768px) {
+    .typing-navbar ~ .container,
+    .typing-navbar ~ main.container {
+        padding: 2.5rem 2rem;
+    }
+}
+@media (min-width: 992px) {
+    .typing-navbar ~ .container,
+    .typing-navbar ~ main.container {
+        padding: 2.5rem 2.5rem;
+    }
 }
 
 /* ---------- Difficulty selector ---------------------------- */
@@ -163,7 +203,7 @@ body {
 /* ---------- Stats panel ------------------------------------ */
 .stat-box {
     text-align: center;
-    padding: 0.75rem 0.5rem;
+    padding: 0.85rem 0.65rem;
     border-radius: 10px;
     background: var(--typing-bg);
     border: 1px solid var(--typing-border);
@@ -292,6 +332,7 @@ body {
 .typing-footer {
     color: var(--typing-muted);
     font-size: 0.85rem;
+    padding: 1.25rem 1rem;
 }
 .typing-footer a { color: var(--typing-primary); text-decoration: none; }
 .typing-footer a:hover { text-decoration: underline; }
@@ -302,7 +343,7 @@ body {
     border: none;
     color: #fff;
     border-radius: 10px;
-    padding: 0.6rem 2rem;
+    padding: 0.7rem 2.25rem;
     font-weight: 600;
     transition: transform 0.15s ease, box-shadow 0.2s;
 }
@@ -310,4 +351,52 @@ body {
     transform: scale(1.04);
     box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
     color: #fff;
+}
+
+/* ---------- Row and column spacing ------------------------- */
+.row.g-4 {
+    --bs-gutter-x: 2rem;
+    --bs-gutter-y: 2rem;
+}
+
+/* ---------- Responsive adjustments ------------------------- */
+@media (max-width: 991.98px) {
+    .typing-card.p-4 {
+        padding: 1.5rem;
+    }
+    .typing-navbar ~ .container,
+    .typing-navbar ~ main.container {
+        padding: 2rem 1.25rem;
+    }
+    .typing-navbar > .container {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+    .row.g-4 {
+        --bs-gutter-x: 1.25rem;
+        --bs-gutter-y: 1.5rem;
+    }
+}
+@media (max-width: 575.98px) {
+    .typing-navbar > .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    .typing-navbar ~ .container,
+    .typing-navbar ~ main.container {
+        padding: 1.5rem 1rem;
+    }
+    .typing-card.p-4 {
+        padding: 1.25rem;
+    }
+    #paragraphDisplay {
+        font-size: 1rem;
+        padding: 1.15rem;
+    }
+    .stat-box {
+        padding: 0.65rem 0.5rem;
+    }
+    .stat-value {
+        font-size: 1.35rem;
+    }
 }

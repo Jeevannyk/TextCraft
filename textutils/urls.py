@@ -16,4 +16,5 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('analyze/', views.analyze, name='analyze'),
     path('history/', views.history, name='history'),
+    path('api/history/', views.history_api, name='history_api'),
 ]

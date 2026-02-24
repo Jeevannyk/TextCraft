@@ -85,3 +85,22 @@ def history(request):
     """Show all past text transformations, newest first."""
     records = TextHistory.objects.all()          # ordered by -created_at (model Meta)
     return render(request, 'textutils/history.html', {'history': records})
+
+
+# --------------- History API (JSON) ---------------------------------------
+from django.http import JsonResponse
+
+def history_api(request):
+    """Return history data as JSON for AJAX requests."""
+    records = TextHistory.objects.all()[:50]  # Limit to 50 most recent
+    data = [
+        {
+            'id': record.id,
+            'original_text': record.original_text,
+            'processed_text': record.processed_text,
+            'selected_options': record.selected_options,
+            'created_at': record.created_at.strftime('%b %d, %Y %H:%M'),
+        }
+        for record in records
+    ]
+    return JsonResponse({'history': data})

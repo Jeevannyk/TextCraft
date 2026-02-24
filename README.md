@@ -45,8 +45,14 @@ DjangoBlog/
 - Django 5.x (`pip install django`)
 
 ## Running the Project
-
+reate virtual environment
+python -m venv venv
 ```bash
+Activate it
+
+PowerShell:
+
+venv\Scripts\Activate
 # 1. Install Django (if not already)
 pip install django
 

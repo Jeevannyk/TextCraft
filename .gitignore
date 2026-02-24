@@ -1,4 +1,7 @@
 venv/
 __pycache__/
-db.sqlite3
+*.pyc
 .env
+history.json
+node_modules/
+db.sqlite3
